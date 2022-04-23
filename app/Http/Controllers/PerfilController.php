@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Perfil;
+use App\Models\Receta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Intervention\Image\Facades\Image;
 
 class PerfilController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'show']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -48,9 +56,10 @@ class PerfilController extends Controller
      */
     public function show($username)
     {
-        $user = User::where('username', '=', $username)->firstOrFail();
+        $user = User::where('username', $username)->firstOrFail();
         $perfil = Perfil::find($user->id);
-        return view('perfiles.show', compact('perfil'));
+        $recetas = Receta::where('user_id', $user->id)->paginate(6);
+        return view('perfiles.show', compact('perfil', 'recetas'));
     }
 
     /**
@@ -63,6 +72,10 @@ class PerfilController extends Controller
     {
         $user = User::where('username', '=', $username)->firstOrFail();
         $perfil = Perfil::find($user->id);
+
+        // Ejecutar el Policy
+        $this->authorize('update', $perfil);
+
         return view('perfiles.edit', compact('perfil'));
     }
 
@@ -73,9 +86,54 @@ class PerfilController extends Controller
      * @param  \App\Models\Perfil  $perfil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Perfil $perfil)
+    public function update(Request $request, $username)
     {
-        //
+        // Seleccionar perfil
+        $user = User::where('username', '=', $username)->firstOrFail();
+        $perfil = Perfil::find($user->id);
+
+        // Ejecutar el Policy
+        $this->authorize('update', $perfil);
+
+        // Validar
+        $data = request()->validate([
+            'name' => 'required',
+            'surname' => 'required',
+            'biografia' => 'required'
+        ]);
+
+        // Si el usuario sube una imagen
+        if( $request['imagen']){
+            // OBTENER RUTA DE IMAGEN
+            $fecha = Carbon::now();
+            $ruta_imagen = $request['imagen']->store('upload-perfiles/'.$fecha->year.'/'.$fecha->month, 'public');
+
+            // RESIZE DE IMAGEN
+            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(600, 600);
+            $img->save();
+
+            // CREAR ARREGLO IMAGEN
+            $array_imagen = ['imagen'=> $ruta_imagen];
+        }
+
+
+        // Asignar nombre y apellidos
+        auth()->user()->name = $data['name'];
+        auth()->user()->surname = $data['surname'];
+        auth()->user()->save();
+
+        unset($data['name']);
+        unset($data['surname']);
+
+        // Asignar biografia e imagen
+        auth()->user()->perfil()->update(
+            array_merge($data, $array_imagen ?? [])
+        );
+
+        // Guardar información
+
+        // Redireccionar
+        return redirect()->route('perfiles.show', ['username'=>auth()->user()->username]);
     }
 
     /**

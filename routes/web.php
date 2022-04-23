@@ -33,6 +33,7 @@ Route::delete('/receta/{receta}', [RecetaController::class, 'destroy'])->name('r
 
 Route::get('/user/{username}', [PerfilController::class, 'show'])->name('perfiles.show');
 Route::get('/user/{username}/edit', [PerfilController::class, 'edit'])->name('perfiles.edit');
+Route::put('/user/{username}', [PerfilController::class, 'update'])->name('perfiles.update');
 
 Auth::routes();
 

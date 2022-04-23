@@ -63,19 +63,22 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ '@'.Auth::user()->username }}
+                                    @if (Auth::user()->perfil->imagen)
+                                        <img src="/storage/{{Auth::user()->perfil->imagen}}" alt="{{Auth::user()->username}}" class="avatar">
+                                    @endif
+                                    <span class="username">{{ '@'.Auth::user()->username }}</span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('perfiles.show', ['username'=>Auth::user()->username]) }}">
-                                        {{ __('Mi perfil') }}
+                                        <i class="fa-solid fa-user me-1"></i> {{ __('Mi perfil') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('recetas.index') }}">
-                                        {{ __('Mis recetas') }}
+                                        <i class="fa-solid fa-book me-1"></i> {{ __('Mis recetas') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <i class="fa-solid fa-right-from-bracket me-1"></i> {{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}"

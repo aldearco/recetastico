@@ -21695,6 +21695,11 @@ body {
   border-top-right-radius: 0;
 }
 
+.avatar {
+  width: 30px;
+  border-radius: 50%;
+}
+
 .logo-footer {
   width: 200px;
 }
@@ -21714,5 +21719,6 @@ body {
 }
 
 trix-editor {
-  min-height: 400px;
+  min-height: 250px !important;
+  height: auto !important;
 }
