@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +19,7 @@ use App\Http\Controllers\RecetaController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
 
 /**
  * Rutas de recetas
@@ -31,6 +31,11 @@ Route::get('/receta/{receta}', [RecetaController::class, 'show'])->name('recetas
 Route::get('/receta/{receta}/edit', [RecetaController::class, 'edit'])->name('recetas.edit');
 Route::put('/receta/{receta}', [RecetaController::class, 'update'])->name('recetas.update');
 Route::delete('/receta/{receta}', [RecetaController::class, 'destroy'])->name('recetas.destroy');
+
+/**
+ * Rutas de categorias
+ */
+Route::get('/categoria/{categoriaReceta}', [CategoriasController::class, 'show'])->name('categorias.show');
 
 /**
  * Rutas de usuarios

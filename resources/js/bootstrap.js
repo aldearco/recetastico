@@ -31,5 +31,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
+// Activar jQuery
+window.$ = require('jquery');
+window.jQuery = require('jquery');
+
 // Activar MomentJS
 window.moment = require('moment');
