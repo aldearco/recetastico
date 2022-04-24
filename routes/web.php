@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 });
 
 /**
- * RUTAS DE RECETAS
+ * Rutas de recetas
  */
 Route::get('/recetas', [RecetaController::class, 'index'])->name('recetas.index');
 Route::get('/recetas/create', [RecetaController::class, 'create'])->name('recetas.create');
@@ -31,10 +32,23 @@ Route::get('/receta/{receta}/edit', [RecetaController::class, 'edit'])->name('re
 Route::put('/receta/{receta}', [RecetaController::class, 'update'])->name('recetas.update');
 Route::delete('/receta/{receta}', [RecetaController::class, 'destroy'])->name('recetas.destroy');
 
+/**
+ * Rutas de usuarios
+ */
 Route::get('/user/{username}', [PerfilController::class, 'show'])->name('perfiles.show');
 Route::get('/user/{username}/edit', [PerfilController::class, 'edit'])->name('perfiles.edit');
 Route::put('/user/{username}', [PerfilController::class, 'update'])->name('perfiles.update');
 
+
+/**
+ * Rutas de likes
+ */
+Route::post('receta/{receta}', [LikesController::class, 'update'])->name('likes.update');
+
+
+/**
+ * Rutas de autenticación
+ */
 Auth::routes();
 
 
