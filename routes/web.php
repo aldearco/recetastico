@@ -33,6 +33,11 @@ Route::put('/receta/{receta}', [RecetaController::class, 'update'])->name('recet
 Route::delete('/receta/{receta}', [RecetaController::class, 'destroy'])->name('recetas.destroy');
 
 /**
+ * Buscador de recetas
+ */
+Route::get('/buscar', [RecetaController::class, 'search'])->name('buscar.show');
+
+/**
  * Rutas de categorias
  */
 Route::get('/categoria/{categoriaReceta}', [CategoriasController::class, 'show'])->name('categorias.show');

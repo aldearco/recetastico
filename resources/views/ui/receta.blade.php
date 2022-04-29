@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-4 mb-4">
     <div class="card shadow">
         <a href="{{ route('recetas.show', ['receta'=>$receta->id]) }}">
             <img src="/storage/{{$receta->imagen}}" alt="{{$receta->titulo}}" class="card-img-top">

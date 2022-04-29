@@ -15,7 +15,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Styles -->
-    <link rel="shortcut icon" href="{{ asset('img/branding/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/branding/favicon.ico') }}" type="image/x-icon">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
@@ -25,9 +25,9 @@
         <nav class="navbar navbar-expand-md sticky-top navbar-light bg-glass shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img class="logoicon" src="{{ asset('img/branding/icon-recetastico.svg') }}"
+                    <img class="logoicon" src="{{ asset('images/branding/icon-recetastico.svg') }}"
                         alt="{{ config('app.name') }}" type="svg">
-                    <img class="logotype" src="{{ asset('img/branding/logotype.svg') }}"
+                    <img class="logotype" src="{{ asset('images/branding/logotype.svg') }}"
                         alt="{{ config('app.name') }}" type="svg">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -112,6 +112,9 @@
                 </div>
             </div>
         </nav>
+
+        @yield('hero')
+
         <div class="nav-scroller bg-light-accent shadow-sm">
             <nav class="nav nav-underline">
                 <div class="container">
@@ -147,7 +150,7 @@
                             </div>
                         </div>
                         <img class="logo-footer pt-3 pb-1"
-                            src="{{ asset('img/branding/logotype.svg') }}"
+                            src="{{ asset('images/branding/logotype.svg') }}"
                             alt="{{ config('app.name') }}" type="svg">
                         <span class="d-block small">
                             @php
@@ -159,7 +162,7 @@
                 <div class="col-lg-2 d-lg-flex d-none justify-content-center align-items-center">
                     <a href="{{ url('/') }}">
                         <img class="icon-footer"
-                            src="{{ asset('img/branding/icon-recetastico.svg') }}"
+                            src="{{ asset('images/branding/icon-recetastico.svg') }}"
                             alt="{{ config('app.name') }}" type="svg">
                     </a>
                 </div>

@@ -15,7 +15,7 @@ class RecetaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth', ['except' => ['show', 'search']]);
     }
 
     /**
@@ -29,7 +29,7 @@ class RecetaController extends Controller
         $usuario = auth()->user();
 
         // Recetas con paginación
-        $recetas = Receta::where('user_id', $usuario->id)->paginate(10);
+        $recetas = Receta::where('user_id', $usuario->id)->paginate(12);
 
         return view('recetas.index', compact('recetas', 'usuario'));
     }
@@ -194,5 +194,16 @@ class RecetaController extends Controller
         $receta->delete();
 
         return redirect()->action([RecetaController::class, 'index']);
+    }
+
+
+    public function search(Request $request){
+        // $busqueda = $request['buscar'];
+        $busqueda = $request->get('buscar');
+
+        $recetas = Receta::where('titulo', 'like', '%' . $busqueda . '%')->paginate(12);
+        $recetas->appends(['buscar'=>$busqueda]);
+
+        return view('busquedas.show', compact('recetas', 'busqueda'));
     }
 }

@@ -3,21 +3,26 @@
 
 @section('content')
 
-<article class="contenido-receta">
+<article class="contenido-receta bg-white p-3 p-sm-5 shadow">
     <h1 class="text-center mb-4">
         {{ $receta->titulo }}
     </h1>
     <div class="imagen-receta">
         <img src="/storage/{{ $receta->imagen }}" class="w-100" alt="">
     </div>
-    <div class="receta-meta mt-2">
+    <div class="receta-meta mt-3">
         <p>
             <span class="font-weight-bold text-primary">Escrito en:</span>
-            {{ $receta->categoria->nombre }}
+            <a href="{{ route('categorias.show', ['categoriaReceta'=>$receta->categoria->id]) }}">
+                {{ $receta->categoria->nombre }}
+            </a>
         </p>
         <p>
             <span class="font-weight-bold text-primary">Autor:</span>
-            {{ $receta->autor->username }}
+            <a href="{{ route('perfiles.show', ['username'=>$receta->autor->username]) }}">
+                {{ $receta->autor->username }}
+            </a>
+            
         </p>
         <p>
             <span class="font-weight-bold text-primary">Fecha:</span>
